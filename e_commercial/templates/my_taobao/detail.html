@@ -1,0 +1,39 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    商品详情
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<!-- 商品详情 -->
+<div class="container">
+    <div class="row">
+        <!-- 商品名 -->
+        <h1 class="col-12 mt-4 mb-4">{{ commodity.commodity.commodity_name }}</h1>
+        <!-- 类别 -->
+        <div class="col-12 alert alert-success">类别：{{ commodity.commodity.commodity_catalog_code.commodity_catalog_name }}</div>
+        <!-- 价格 -->
+        <div class="col-12 alert alert-success">价格：￥{{ commodity.commodity.price }}</div>
+        <!-- 发货地 -->
+        <div class="col-12 alert alert-success">发货地：{{ commodity.commodity.place_of_delivery }}</div>
+        <!-- 规格 -->
+        <div class="col-12 alert alert-success">规格：{{ commodity.commodity.commodity_specification }}</div>
+        <!-- 库存 -->
+        <div class="col-12 alert alert-success">库存：{{ commodity.inventory }}</div>
+        <!-- 商品介绍 -->
+        <div class="col-12">
+            <p>商品介绍：{{ commodity.commodity.commodity_introduction }}</p>
+        </div>
+        <!-- 注脚 -->
+        <div class="card-footer">
+            <a href="{% url 'my_taobao:shop' commodity.shop.shop_id %}" class="btn btn-primary">进入店铺</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

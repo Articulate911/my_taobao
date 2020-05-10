@@ -1,0 +1,50 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    首页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<!-- 定义放置商品名的div容器 -->
+<div class="container">
+    <div class="row mt-2">
+
+        {% for commodity in commodities %}
+        <!-- 商品内容 -->
+        <div class="col-4 mb-4">
+        <!-- 卡片容器 -->
+            <div class="card h-100">
+                <!-- 商品名 -->
+                <h4 class="card-header">{{ commodity.commodity.commodity_name }}</h4>
+                <!-- 价格 -->
+                <div class="card-body">
+                    <p class="card-text">价格：￥{{ commodity.commodity.price }}</p>
+                </div>
+                <!-- 发货地 -->
+                <div class="card-body">
+                    <p class="card-text">发货地：{{ commodity.commodity.place_of_delivery }}</p>
+                </div>
+                <!-- 简介 -->
+                <div class="card-body">
+                    <p class="card-text">规格：{{ commodity.commodity.commodity_specification }}</p>
+                </div>
+                <!-- 库存 -->
+                <div class="card-body">
+                    <p class="card-text">库存：{{ commodity.inventory }}</p>
+                </div>
+                <!-- 注脚 -->
+                <div class="card-footer">
+                    <a href="{% url 'my_taobao:commodity_detail' commodity.commodity.commodity_id %}" class="btn btn-primary">查看详情</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock content %}

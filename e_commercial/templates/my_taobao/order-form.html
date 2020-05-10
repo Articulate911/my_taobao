@@ -1,0 +1,44 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    首页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+{% if user.is_authenticated %}
+<!-- 定义放置订单名的div容器 -->
+<div class="container">
+    <div class="row mt-2">
+
+        {% for order in orders %}
+        <!-- 订单内容 -->
+        <div class="col-4 mb-4">
+        <!-- 卡片容器 -->
+            <div class="card h-100">
+                <!-- 订单号 -->
+                <h4 class="card-header">订单号：{{ order.order_form_id }}</h4>
+                <!-- 订单类型 -->
+                <div class="card-body">
+                    <p class="card-text">订单类型：{{ order.order_form_catalog_code.order_form_catalog_name }}</p>
+                </div>
+                <!-- 创建时间 -->
+                <div class="card-body">
+                    <p class="card-text">创建时间：{{ order.create_time }}</p>
+                </div>
+                <!-- 注脚 -->
+                <div class="card-footer">
+                    <a href="{% url 'my_taobao:order_form_detail' order.order_form_id %}" class="btn btn-primary">查看详情</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<p>请先登录！</p>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,29 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    店铺详情
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+
+<!-- 店铺详情 -->
+<div class="container">
+    <div class="row">
+        <!-- 店铺名 -->
+        <h1 class="col-12 mt-4 mb-4">{{ shop.shop_name }}</h1>
+        <!-- 店铺号 -->
+        <div class="col-12 alert alert-success">店铺号：{{ shop.shop_id }}</div>
+        <!-- 注册时间 -->
+        <div class="col-12 alert alert-success">注册时间：{{ shop.shop_reg_date }}</div>
+        <!-- 注脚 -->
+        <div class="card-footer">
+            <a href="{% url 'my_taobao:shop_list' shop.shop_id %}" class="btn btn-primary">全部宝贝</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

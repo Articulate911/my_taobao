@@ -1,0 +1,75 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    订单详情
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+{% if user.is_authenticated %}
+<!-- 订单详情 -->
+<div class="container">
+    <div class="row mt-2">
+        {% for commodity in commodities %}
+        <!-- 订单内容 -->
+        <div class="col-4 mb-4">
+        <!-- 卡片容器 -->
+            <div class="card h-100">
+                <!-- 商品名 -->
+                <h4 class="card-header">{{ commodity.commodity.commodity_name }}</h4>
+                <!-- 价格 -->
+                <div class="card-body">
+                    <p class="card-text">价格：￥{{ commodity.commodity.price }}</p>
+                </div>
+                <!-- 发货地 -->
+                <div class="card-body">
+                    <p class="card-text">发货地：{{ commodity.commodity.place_of_delivery }}</p>
+                </div>
+                <!-- 简介 -->
+                <div class="card-body">
+                    <p class="card-text">规格：{{ commodity.commodity.commodity_specification|slice:'100' }}</p>
+                </div>
+                <!-- 数量 -->
+                <div class="card-body">
+                    <p class="card-text">数量：{{ commodity.commodity_pc }}</p>
+                </div>
+                <!-- 注脚 -->
+                <div class="card-footer">
+                    <a href="{% url 'my_taobao:commodity_detail' commodity.commodity_id %}" class="btn btn-primary">查看详情</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <!-- 订单号 -->
+        <h1 class="col-12 mt-4 mb-4">订单号：{{ order.order_form_id }}</h1>
+        <!-- 用户名 -->
+        <div class="col-12 alert alert-success">用户名：{{ user.username }}</div>
+        <!-- 订单类型 -->
+        <div class="col-12 alert alert-success">订单类型：{{ order.order_form_catalog_code.order_form_catalog_name }}</div>
+        <!-- 总价 -->
+        <div class="col-12 alert alert-success">总价：￥{{ total_price }}</div>
+        <!-- 运费 -->
+        <div class="col-12 alert alert-success">运费：￥{{ order.freight }}</div>
+        <!-- 实付 -->
+        <div class="col-12 alert alert-success">实付：￥{{ payment }}</div>
+        <!-- 收货地址 -->
+        <div class="col-12 alert alert-success">收货地址：{{ order.receive_address }}</div>
+        <!-- 创建时间 -->
+        <div class="col-12 alert alert-success">创建时间：{{ order.create_time }}</div>
+        <!-- 付款时间 -->
+        <div class="col-12 alert alert-success">付款时间：{{ order.pay_time }}</div>
+        <!-- 发货时间 -->
+        <div class="col-12 alert alert-success">发货时间：{{ order.deliver_time }}</div>
+        <!-- 成交时间 -->
+        <div class="col-12 alert alert-success">成交时间：{{ order.deal_time }}</div>
+    </div>
+</div>
+{% else %}
+<p>请先登录！</p>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,39 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    首页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row mt-2">
+
+        {% for follow in follows %}
+        <!-- 关注内容 -->
+        <div class="col-4 mb-4">
+        <!-- 卡片容器 -->
+            <div class="card h-100">
+                <!-- 店铺名 -->
+                <h4 class="card-header">店铺名：{{ follow.shop.shop_name }}</h4>
+                <!-- 注册日期 -->
+                <div class="card-body">
+                    <p class="card-text">注册日期：{{ follow.shop.shop_reg_date }}</p>
+                </div>
+                <!-- 注脚 -->
+                <div class="card-footer">
+                    <a href="{% url 'my_taobao:shop' follow.shop.shop_id %}" class="btn btn-primary">进入店铺</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<p>请先登录！</p>
+{% endif %}
+{% endblock content %}
